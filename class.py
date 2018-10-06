@@ -1,8 +1,8 @@
 class Schema:
     def __init__(self):
-        # self.version = None
+        self.version = None
         self.name = None
-        # self.description = None
+        self.description = None
         self.domains = list()
         self.tables = list()
 
