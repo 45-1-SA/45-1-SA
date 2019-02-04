@@ -162,4 +162,4 @@ class XmlMaker:
                         constraint_node.setAttribute("props", ", ".join(props))
 
             constraints.append(constraint_node)
-return constraints
+        return constraints
