@@ -44,4 +44,4 @@ if __name__ == "__main__":
         f.write(xml2.toprettyxml(indent="  ", encoding="utf-8"))
 
     print("Конвертация DBD -> RAM - > XDB2 успешна.\n Новый файл - prjadm2.xdb\n")
-print("Êîíâåðòàöèÿ DBD -> RAM - > XDB2 óñïåøíà.\n Íîâûé ôàéë - prjadm2.xdb\n")
+
