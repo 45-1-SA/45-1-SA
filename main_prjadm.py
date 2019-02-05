@@ -1,37 +1,37 @@
-from modules.xdb_ram import XmlParser  # Модуль конвертации xdb->ram
-from modules.ram_dbd import RamDbd  # Модуль конвертации ram->db
-from modules.dbd_ram import DbdRam  # Модуль конвертации db->ram
-from modules.ram_xdb import XmlMaker  # Модуль конвертации ram->xdb
-import argparse  # Загружаем стандартную библиотеку обработки параметров консоли
-import os.path  # Загружаем модуль для работы с путями
+from modules.xdb_ram import XmlParser  # РњРѕРґСѓР»СЊ РєРѕРЅРІРµСЂС‚Р°С†РёРё xdb->ram
+from modules.ram_dbd import RamDbd  # РњРѕРґСѓР»СЊ РєРѕРЅРІРµСЂС‚Р°С†РёРё ram->db
+from modules.dbd_ram import DbdRam  # РњРѕРґСѓР»СЊ РєРѕРЅРІРµСЂС‚Р°С†РёРё db->ram
+from modules.ram_xdb import XmlMaker  # РњРѕРґСѓР»СЊ РєРѕРЅРІРµСЂС‚Р°С†РёРё ram->xdb
+import argparse  # Р—Р°РіСЂСѓР¶Р°РµРј СЃС‚Р°РЅРґР°СЂС‚РЅСѓСЋ Р±РёР±Р»РёРѕС‚РµРєСѓ РѕР±СЂР°Р±РѕС‚РєРё РїР°СЂР°РјРµС‚СЂРѕРІ РєРѕРЅСЃРѕР»Рё
+import os.path  # Р—Р°РіСЂСѓР¶Р°РµРј РјРѕРґСѓР»СЊ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РїСѓС‚СЏРјРё
 
 if __name__ == "__main__":
     #
-    # Преобразование XDB -> RAM -> DBD
+    # РџСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ XDB -> RAM -> DBD
     #
-    parser = argparse.ArgumentParser(description='Программа преобразования данных.')
+    parser = argparse.ArgumentParser(description='РџСЂРѕРіСЂР°РјРјР° РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёСЏ РґР°РЅРЅС‹С….')
 
     parser.add_argument('-f', '--file', default='materials/prjadm.xdb',
-                        help='Преобразование XDB -> RAM -> DBD.')
+                        help='РџСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ XDB -> RAM -> DBD.')
 
     args = parser.parse_args()
 
     if not os.path.exists(args.file):
-        print("Файла {0} не существует.".format(args.file))
+        print("Р¤Р°Р№Р»Р° {0} РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚.".format(args.file))
         exit(-1)
 
     ram = XmlParser(args.file).make_ram()
 
     dbd_create = RamDbd(args.file.replace('.xdb', '.db'), ram)
 
-    print("Конвертация XDB -> RAM -> DBD успешна.\n Новый файл - prjadm.db")
+    print("РљРѕРЅРІРµСЂС‚Р°С†РёСЏ XDB -> RAM -> DBD СѓСЃРїРµС€РЅР°.\n РќРѕРІС‹Р№ С„Р°Р№Р» - prjadm.db")
     #
-    # Преобразование DBD -> RAM - > XDB2
+    # РџСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ DBD -> RAM - > XDB2
     #
-    parser2 = argparse.ArgumentParser(description='Программа преобразования данных.')
+    parser2 = argparse.ArgumentParser(description='РџСЂРѕРіСЂР°РјРјР° РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёСЏ РґР°РЅРЅС‹С….')
 
     parser2.add_argument('-f', '--file', default='materials/prjadm.db',
-                        help='Преобразование DBD -> RAM - > XDB2.')
+                        help='РџСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ DBD -> RAM - > XDB2.')
 
     args = parser2.parse_args()
 
@@ -39,8 +39,9 @@ if __name__ == "__main__":
 
     xml2 = XmlMaker(ram).make_xdb()
 
-    # Записываем в новый файл ковертированное ram-представление
+    # Р—Р°РїРёСЃС‹РІР°РµРј РІ РЅРѕРІС‹Р№ С„Р°Р№Р» РєРѕРІРµСЂС‚РёСЂРѕРІР°РЅРЅРѕРµ ram-РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ
     with open("materials/prjadm2.xdb", "wb") as f:
         f.write(xml2.toprettyxml(indent="  ", encoding="utf-8"))
 
-print("Конвертация DBD -> RAM - > XDB2 успешна.\n Новый файл - prjadm2.xdb\n")
+    print("РљРѕРЅРІРµСЂС‚Р°С†РёСЏ DBD -> RAM - > XDB2 СѓСЃРїРµС€РЅР°.\n РќРѕРІС‹Р№ С„Р°Р№Р» - prjadm2.xdb\n")
+print("ГЉГ®Г­ГўГҐГ°ГІГ Г¶ГЁГї DBD -> RAM - > XDB2 ГіГ±ГЇГҐГёГ­Г .\n ГЌГ®ГўГ»Г© ГґГ Г©Г« - prjadm2.xdb\n")
